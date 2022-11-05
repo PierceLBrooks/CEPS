@@ -5,7 +5,27 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
     message(FATAL_ERROR "Source and build directories cannot be the same. Go use the /build directory.")
 endif()
 
-
+set(CEPS_HEADERS )
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Clausen.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/CommonRefinement.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/ConeFlattening.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/ConePlacement.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Cutter.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/DirectSum.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/DirectSum.ipp")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/FlipFormulas.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/GeometryUtils.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/IO.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/IO.ipp")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Layout.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Logger.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Optimizer.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Tracing.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Triangulation.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Utils.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Utils.ipp")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.h")
+list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.ipp")
 add_library(
   CEPS
   Triangulation.cpp
@@ -26,6 +46,16 @@ add_library(
   ../deps/predicates/predicates.c
 )
 target_link_libraries(CEPS polyscope geometry-central)
+set_target_properties(CEPS PROPERTIES PUBLIC_HEADER "${CEPS_HEADERS}")
+install(TARGETS CEPS polyscope geometry-central)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  FILES_MATCHING PATTERN "*.h"
+)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/geometry-central/include/"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  FILES_MATCHING PATTERN "*.h"
+)
 
 add_executable(
   parameterize

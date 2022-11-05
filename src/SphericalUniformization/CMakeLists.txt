@@ -1,5 +1,12 @@
 include("findPETSc.cmake")
 
+set(SPHERICAL_HEADERS )
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/PartiallyDecoratedTriangulation.h")
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/PetscWrapper.h")
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/SphericalUniformization.h")
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveSphericalParameterizationQuantity.h")
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveSphericalParameterizationQuantity.ipp")
+list(APPEND SPHERICAL_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/bindata.h")
 add_library(
   CEPS_SPHERICAL
   SphericalUniformization.cpp
@@ -12,6 +19,8 @@ add_library(
 target_include_directories(CEPS_SPHERICAL PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" ${PETSC_INCLUDES} "${CMAKE_CURRENT_SOURCE_DIR}/..")
 target_include_directories(CEPS_SPHERICAL PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../deps/polyscope/deps/stb/")
 target_link_libraries(CEPS_SPHERICAL polyscope geometry-central CEPS ${PETSC_LIBRARIES})
+set_target_properties(CEPS_SPHERICAL PROPERTIES PUBLIC_HEADER "${SPHERICAL_HEADERS}")
+install(TARGETS CEPS_SPHERICAL)
 
 add_executable(
   spherical_uniformize
