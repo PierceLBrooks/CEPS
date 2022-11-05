@@ -52,9 +52,17 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
   DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
   FILES_MATCHING PATTERN "*.h"
 )
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  FILES_MATCHING PATTERN "*.ipp"
+)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/geometry-central/include/"
   DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
   FILES_MATCHING PATTERN "*.h"
+)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/geometry-central/include/"
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  FILES_MATCHING PATTERN "*.ipp"
 )
 
 add_executable(
