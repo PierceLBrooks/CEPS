@@ -5,8 +5,9 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
     message(FATAL_ERROR "Source and build directories cannot be the same. Go use the /build directory.")
 endif()
 
-file(GLOB IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/deps/imgui/imgui/*.h")
+file(GLOB CEPS_IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/deps/imgui/imgui/*.h")
 set(CEPS_HEADERS )
+set(CEPS_POLYSCOPE_HEADERS )
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Clausen.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/CommonRefinement.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/ConeFlattening.h")
@@ -25,8 +26,8 @@ list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Tracing.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Triangulation.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Utils.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Utils.ipp")
-list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.h")
-list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.ipp")
+list(APPEND CEPS_POLYSCOPE_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.h")
+list(APPEND CEPS_POLYSCOPE_HEADERS "${CMAKE_CURRENT_LIST_DIR}/polyscope/SurfaceProjectiveParameterizationQuantity.ipp")
 add_library(
   CEPS
   Triangulation.cpp
@@ -49,7 +50,8 @@ add_library(
 target_link_libraries(CEPS polyscope geometry-central)
 set_target_properties(CEPS PROPERTIES PUBLIC_HEADER "${CEPS_HEADERS}")
 install(TARGETS CEPS polyscope geometry-central)
-install(FILES ${IMGUI_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/")
+install(FILES ${CEPS_IMGUI_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/")
+install(FILES ${CEPS_POLYSCOPE_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/polyscope/")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
   DESTINATION "${CMAKE_INSTALL_PREFIX}/include/"
   FILES_MATCHING PATTERN "*.h"
