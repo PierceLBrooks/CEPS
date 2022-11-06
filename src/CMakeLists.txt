@@ -5,6 +5,7 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
     message(FATAL_ERROR "Source and build directories cannot be the same. Go use the /build directory.")
 endif()
 
+file(GLOB IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/deps/imgui/imgui/*.h")
 set(CEPS_HEADERS )
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/Clausen.h")
 list(APPEND CEPS_HEADERS "${CMAKE_CURRENT_LIST_DIR}/CommonRefinement.h")
@@ -48,20 +49,21 @@ add_library(
 target_link_libraries(CEPS polyscope geometry-central)
 set_target_properties(CEPS PROPERTIES PUBLIC_HEADER "${CEPS_HEADERS}")
 install(TARGETS CEPS polyscope geometry-central)
+install(FILES ${IMGUI_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
-  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/include/"
   FILES_MATCHING PATTERN "*.h"
 )
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
-  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/include/"
   FILES_MATCHING PATTERN "*.ipp"
 )
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/geometry-central/include/"
-  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/include/"
   FILES_MATCHING PATTERN "*.h"
 )
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/geometry-central/include/"
-  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/include/"
   FILES_MATCHING PATTERN "*.ipp"
 )
 
