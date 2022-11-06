@@ -8,6 +8,8 @@
 
 #include "imgui.h"
 
+#include "stb_image.h"
+
 using std::cout;
 using std::endl;
 

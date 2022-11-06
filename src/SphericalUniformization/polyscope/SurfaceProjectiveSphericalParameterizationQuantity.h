@@ -8,7 +8,6 @@
 
 #include "polyscope/bindata.h"
 
-#include "stb_image.h"
 
 namespace polyscope {
 
