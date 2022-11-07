@@ -51,6 +51,12 @@ add_library(
 target_link_libraries(CEPS polyscope geometry-central)
 set_target_properties(CEPS PROPERTIES PUBLIC_HEADER "${CEPS_HEADERS}")
 install(TARGETS CEPS polyscope geometry-central)
+if("${POLYSCOPE_BACKEND_OPENGL3_GLFW}" OR "${POLYSCOPE_BACKEND_OPENGL_MOCK}")
+  install(TARGETS imgui)
+endif()
+if ("${POLYSCOPE_BACKEND_OPENGL3_GLFW}")
+  install(TARGETS glfw)
+endif()
 install(FILES ${CEPS_IMGUI_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/")
 install(FILES ${CEPS_POLYSCOPE_HEADERS} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/polyscope/")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../deps/polyscope/include/"
